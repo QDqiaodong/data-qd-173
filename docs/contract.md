@@ -1,0 +1,3 @@
+# Charging settlement contract
+
+Sessions have unique IDs, meter start/end values in Wh, and a UTC interval. Tariff rows define non-overlapping UTC intervals and integer price per kWh in cents. Each session is split at tariff boundaries; energy is apportioned by elapsed seconds, with the final segment receiving the exact remainder. Charges use integer arithmetic and round half up to cents per segment. Reject negative energy, invalid intervals, missing tariff coverage, and overlapping tariffs. The implementation assumes constant power during a session; actual meter interval readings should be used when available.
