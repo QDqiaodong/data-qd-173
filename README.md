@@ -9,6 +9,7 @@ Two modes share one code base:
 * **Collection & admission workbench** (`charging.workbench`, CLI `charge-access`) – a separate, resumable JSON state machine that imports closed-line/adjustment credentials from the settlement engine (read-only), registers customer receipts, write-offs and chargebacks, and grants/starts/finishes station charging permits based on overdue debt. It never writes back to the settlement state. See [`docs/workbench.md`](docs/workbench.md).
 * **Fleet & load-shed planning** (`charging.planning`, CLI `charge-plan`) – a local, forward-only scheduler that turns fleet charging needs and mutually-exclusive grid load-shed offers into one auditable baseline schedule, per-offer accept decisions and a prefix-locked contingency plan per accepted offer. It issues no control commands and produces no billable energy, and never touches settlement/workbench state. See [`docs/planning.md`](docs/planning.md).
 * **Charge-start evidence verification** (`charging.evidence`, CLI `charge-evidence`) – a local, read-only log verifier that matches start requests (mobile app / on-site terminal) against pile-side outcomes (actual start / start failure) for one station snapshot, and delivers a customer-service evidence list (confirmed pairs, unmatched records, records needing manual review) plus an operations report (per-group success-count ranges over all optimal interpretations, checked against a target in basis points). It never writes permits, pile faults or planned energy into settlement/workbench state. See [`docs/evidence.md`](docs/evidence.md).
+* **Protected charging-report release** (`charging.reporting`, CLI `charge-report`) – a local, read-only compiler for one closed period that turns billable `closed_lines` Wh into a station-by-fleet public report while preserving contract-protected cell margins. Exact integer lower-bound flow decides whether each protected cell still admits both a `v-d` and a `v+d` integer table under all public facts (no Wh enumeration, scales to 20 stations × 12 fleets, millions of Wh); candidate packages are chosen by exact value-maximizing branch-and-bound with lexicographic tie-break. It reads `apply_batch` state but never writes it back. See [`docs/reporting.md`](docs/reporting.md).
 
 ## Install and test
 
@@ -154,8 +155,35 @@ untouched. Full contract, JSON shapes, matching caliber, exact solution method
 (min-cost flow plus zero-reduced-cost residual SCCs, no enumeration of
 interpretations) and determinism notes: [`docs/evidence.md`](docs/evidence.md).
 
-## Layout
+## Protected charging-report release
 
+Compile one **closed** period into a public station-by-fleet report that keeps
+contract-protected cell values hidden, plus an internal release-decision review:
+
+```sh
+python -m charging.reporting.cli \
+  --state run/state.json \
+  --request fixtures/reporting/request-headline.json \
+  --public-output run/report-public.json \
+  --review-output run/report-review.json
+
+# runnable walkthrough: headline 甲/乙/丙 acceptance, published station subtotal,
+# equal-value tie-break, normal empty publish, and distinct prior_risk failure
+bash examples/reporting-demo.sh
+```
+
+Only `billable` closed lines are summed (non-billable lines, the current session
+view and later money adjustments are excluded), stations come from `sessions`, and
+the request supplies the unique fleet of each billable session. A protected cell
+with true value `v` and margin `d` is releasable only when the public facts still
+admit both an integer table with the cell `<= v-d` and one with it `>= v+d`;
+feasibility is an exact lower-bound integer flow, so no Wh value is ever
+enumerated. Packages are all-or-nothing and selected by exact total value with
+lexicographic tie-break. Failures exit `2` with distinct codes
+(`invalid_input`, `conflicting_history`, `prior_risk`) and leave existing outputs
+untouched. Full contract and JSON shapes: [`docs/reporting.md`](docs/reporting.md).
+
+## Layout
 ```
 charging/core.py             legacy settle() plus the shared per-session charging rule
 charging/engine.py           continuous state machine: apply_batch(parent_state, batch)
@@ -166,14 +194,19 @@ charging/planning/engine.py  fleet/load-shed joint scheduler: plan(fleet_input, 
 charging/planning/cli.py     charge-plan entry point (pure planning, no control, no billing)
 charging/evidence/engine.py  charge-start evidence verification: analyze(requests_doc, results_doc, ...)
 charging/evidence/cli.py     charge-evidence entry point (read-only log verification)
+charging/reporting/marginflow.py lower-bound integer flow: feasibility & protected-cell margins
+charging/reporting/engine.py  protected report compilation: compile_report(state, request)
+charging/reporting/cli.py     charge-report entry point (read-only, no state write-back)
 fixtures/batches/            synthetic settlement batches
 fixtures/workbench/          synthetic workbench round inputs (no generated state is committed)
 fixtures/planning/           synthetic fleet/offers inputs and committed example plans
 fixtures/evidence/           synthetic request/result log snapshots (two-channel, coded, 32x32 backlog)
+fixtures/reporting/          closed-period batches and release-request fixtures (headline + edge cases)
 examples/workbench-demo.sh   multi-round CLI demonstration of the admission lifecycle
 examples/planning-demo.sh    CLI demonstration of joint scheduling and both failure modes
 examples/evidence-demo.sh    CLI demonstration of evidence lists, success ranges and failure semantics
-tests/                       legacy, continuous-mode, workbench, planning and evidence tests, incl. CLI subprocess
+examples/reporting-demo.sh   CLI walkthrough from apply_batch closure to the two report outputs
+tests/                       legacy, continuous-mode, workbench, planning, evidence and reporting tests, incl. CLI subprocess
 ```
 
 Fixture data is synthetic. MIT licensed.

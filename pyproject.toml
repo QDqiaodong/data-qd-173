@@ -13,6 +13,7 @@ charge-settle = "charging.cli:main"
 charge-access = "charging.workbench.cli:main"
 charge-plan = "charging.planning.cli:main"
 charge-evidence = "charging.evidence.cli:main"
+charge-report = "charging.reporting.cli:main"
 
 [tool.setuptools]
-packages = ["charging", "charging.workbench", "charging.planning", "charging.evidence"]
+packages = ["charging", "charging.workbench", "charging.planning", "charging.evidence", "charging.reporting"]

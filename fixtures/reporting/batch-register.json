@@ -1,0 +1,62 @@
+{
+  "batch_id": "2026-01-report-demo-register",
+  "tariffs": [
+    {"start": "2026-01-01T00:00:00+00:00", "end": "2026-02-01T00:00:00+00:00", "cents_per_kwh": 10}
+  ],
+  "stations": [
+    {"station_id": "A", "import_source_id": "M-ST-A"},
+    {"station_id": "B", "import_source_id": "M-ST-B"}
+  ],
+  "sessions": [
+    {"session_id": "S-AF", "station_id": "A", "meter_source_id": "M-S-AF",
+     "start": "2026-01-10T00:00:00+00:00", "end": "2026-01-10T01:00:00+00:00"},
+    {"session_id": "S-AG", "station_id": "A", "meter_source_id": "M-S-AG",
+     "start": "2026-01-10T00:00:00+00:00", "end": "2026-01-10T01:00:00+00:00"},
+    {"session_id": "S-AX", "station_id": "A", "meter_source_id": "M-S-AX",
+     "start": "2026-01-10T02:00:00+00:00", "end": "2026-01-10T03:00:00+00:00"},
+    {"session_id": "S-BF", "station_id": "B", "meter_source_id": "M-S-BF",
+     "start": "2026-01-11T00:00:00+00:00", "end": "2026-01-11T01:00:00+00:00"},
+    {"session_id": "S-BG", "station_id": "B", "meter_source_id": "M-S-BG",
+     "start": "2026-01-11T01:00:00+00:00", "end": "2026-01-11T02:00:00+00:00"}
+  ],
+  "records": [
+    {"record_id": "rec-a-0000", "source_id": "M-ST-A",
+     "meter_instant": "2026-01-10T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-a-0010", "source_id": "M-ST-A",
+     "meter_instant": "2026-01-10T01:00:00+00:00", "cumulative_wh": 10},
+    {"record_id": "rec-a-0020", "source_id": "M-ST-A",
+     "meter_instant": "2026-01-10T02:00:00+00:00", "cumulative_wh": 10},
+    {"record_id": "rec-a-0030", "source_id": "M-ST-A",
+     "meter_instant": "2026-01-10T03:00:00+00:00", "cumulative_wh": 20},
+    {"record_id": "rec-af-0000", "source_id": "M-S-AF",
+     "meter_instant": "2026-01-10T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-af-0010", "source_id": "M-S-AF",
+     "meter_instant": "2026-01-10T01:00:00+00:00", "cumulative_wh": 5},
+    {"record_id": "rec-ag-0000", "source_id": "M-S-AG",
+     "meter_instant": "2026-01-10T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-ag-0010", "source_id": "M-S-AG",
+     "meter_instant": "2026-01-10T01:00:00+00:00", "cumulative_wh": 5},
+    {"record_id": "rec-ax-0020", "source_id": "M-S-AX",
+     "meter_instant": "2026-01-10T02:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-ax-0030", "source_id": "M-S-AX",
+     "meter_instant": "2026-01-10T03:00:00+00:00", "cumulative_wh": 7},
+    {"record_id": "rec-b-0000", "source_id": "M-ST-B",
+     "meter_instant": "2026-01-11T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-b-0010", "source_id": "M-ST-B",
+     "meter_instant": "2026-01-11T01:00:00+00:00", "cumulative_wh": 5},
+    {"record_id": "rec-b-0020", "source_id": "M-ST-B",
+     "meter_instant": "2026-01-11T02:00:00+00:00", "cumulative_wh": 10},
+    {"record_id": "rec-bf-0000", "source_id": "M-S-BF",
+     "meter_instant": "2026-01-11T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-bf-0010", "source_id": "M-S-BF",
+     "meter_instant": "2026-01-11T01:00:00+00:00", "cumulative_wh": 5},
+    {"record_id": "rec-bg-0010", "source_id": "M-S-BG",
+     "meter_instant": "2026-01-11T01:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-bg-0020", "source_id": "M-S-BG",
+     "meter_instant": "2026-01-11T02:00:00+00:00", "cumulative_wh": 5}
+  ],
+  "periods": [
+    {"period_id": "P-2026-01", "start": "2026-01-01T00:00:00+00:00",
+     "end": "2026-02-01T00:00:00+00:00", "action": "open"}
+  ]
+}

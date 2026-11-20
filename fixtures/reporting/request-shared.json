@@ -1,0 +1,109 @@
+{
+  "period_id": "P-2026-01",
+  "fleet_attribution": [
+    {
+      "session_id": "S-AF",
+      "fleet_id": "F"
+    },
+    {
+      "session_id": "S-AG",
+      "fleet_id": "G"
+    },
+    {
+      "session_id": "S-BF",
+      "fleet_id": "F"
+    },
+    {
+      "session_id": "S-BG",
+      "fleet_id": "G"
+    },
+    {
+      "session_id": "S-AX",
+      "fleet_id": "G"
+    }
+  ],
+  "public_caliber": {
+    "stations": [
+      "A",
+      "B"
+    ],
+    "fleets": [
+      "F",
+      "G"
+    ],
+    "upper_bounds_wh": [
+      {
+        "station_id": "A",
+        "fleet_id": "F",
+        "upper_bound_wh": 10
+      },
+      {
+        "station_id": "A",
+        "fleet_id": "G",
+        "upper_bound_wh": 10
+      },
+      {
+        "station_id": "B",
+        "fleet_id": "F",
+        "upper_bound_wh": 10
+      },
+      {
+        "station_id": "B",
+        "fleet_id": "G",
+        "upper_bound_wh": 10
+      }
+    ]
+  },
+  "historical_facts": [
+    {
+      "fact_type": "total",
+      "station_id": null,
+      "fleet_id": null,
+      "value_wh": 20
+    }
+  ],
+  "candidate_packages": [
+    {
+      "package_id": "p1",
+      "value": 6,
+      "requests": [
+        {
+          "fact_type": "cell",
+          "station_id": "A",
+          "fleet_id": "G",
+          "value_wh": 0
+        }
+      ]
+    },
+    {
+      "package_id": "p2",
+      "value": 4,
+      "requests": [
+        {
+          "fact_type": "cell",
+          "station_id": "A",
+          "fleet_id": "G",
+          "value_wh": 0
+        },
+        {
+          "fact_type": "fleet",
+          "station_id": null,
+          "fleet_id": "G",
+          "value_wh": 0
+        }
+      ]
+    }
+  ],
+  "protected_cells": [
+    {
+      "station_id": "A",
+      "fleet_id": "F",
+      "margin_wh": 2
+    },
+    {
+      "station_id": "B",
+      "fleet_id": "G",
+      "margin_wh": 2
+    }
+  ]
+}

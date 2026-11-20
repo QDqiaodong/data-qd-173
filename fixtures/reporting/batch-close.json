@@ -1,0 +1,10 @@
+{
+  "batch_id": "2026-02-report-demo-close",
+  "records": [],
+  "periods": [
+    {"period_id": "P-2026-01", "start": "2026-01-01T00:00:00+00:00",
+     "end": "2026-02-01T00:00:00+00:00", "action": "close"},
+    {"period_id": "P-2026-02", "start": "2026-02-01T00:00:00+00:00",
+     "end": "2026-03-01T00:00:00+00:00", "action": "open"}
+  ]
+}
