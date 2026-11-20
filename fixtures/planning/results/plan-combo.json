@@ -1,0 +1,280 @@
+{
+  "plan_version": 1,
+  "station_id": "ST-COMBO",
+  "window_start": "2026-12-02T00:00:00+00:00",
+  "slot_minutes": 30,
+  "slot_count": 4,
+  "normal_capacity_wh": [
+    1,
+    4,
+    1,
+    1
+  ],
+  "decision": {
+    "accepted_offer_ids": [
+      "S1",
+      "S2"
+    ],
+    "total_reward": 12,
+    "offer_count": 3,
+    "accepted_count": 2
+  },
+  "offers": [
+    {
+      "offer_id": "BIG",
+      "start_slot": 1,
+      "end_slot": 2,
+      "reduction_wh": 4,
+      "reward": 10
+    },
+    {
+      "offer_id": "S1",
+      "start_slot": 1,
+      "end_slot": 4,
+      "reduction_wh": 1,
+      "reward": 7
+    },
+    {
+      "offer_id": "S2",
+      "start_slot": 2,
+      "end_slot": 4,
+      "reduction_wh": 1,
+      "reward": 5
+    }
+  ],
+  "offer_decisions": [
+    {
+      "offer_id": "BIG",
+      "accepted": false,
+      "reward_if_accepted": 0,
+      "reject_reason": "not_in_best_combination",
+      "feasible_alone": true
+    },
+    {
+      "offer_id": "S1",
+      "accepted": true,
+      "reward_if_accepted": 7,
+      "reject_reason": null,
+      "feasible_alone": true
+    },
+    {
+      "offer_id": "S2",
+      "accepted": true,
+      "reward_if_accepted": 5,
+      "reject_reason": null,
+      "feasible_alone": true
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "baseline",
+      "kind": "baseline",
+      "offer_id": null,
+      "activation_start_slot": null,
+      "prefix_locked_through_slot": null,
+      "vehicles": [
+        {
+          "vehicle_id": "A",
+          "arrival_slot": 0,
+          "departure_slot": 2,
+          "required_energy_wh": 1,
+          "planned_energy_wh": 1,
+          "charge_wh_by_slot": [
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "vehicle_id": "B",
+          "arrival_slot": 0,
+          "departure_slot": 4,
+          "required_energy_wh": 2,
+          "planned_energy_wh": 2,
+          "charge_wh_by_slot": [
+            1,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "slot": 0,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 1,
+          "normal_capacity_wh": 4,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 4,
+          "station_used_wh": 2,
+          "spare_capacity_wh": 2
+        },
+        {
+          "slot": 2,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 1
+        },
+        {
+          "slot": 3,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 1
+        }
+      ],
+      "total_planned_wh": 3
+    },
+    {
+      "scenario_id": "offer:S1",
+      "kind": "contingency",
+      "offer_id": "S1",
+      "activation_start_slot": 1,
+      "prefix_locked_through_slot": 1,
+      "vehicles": [
+        {
+          "vehicle_id": "A",
+          "arrival_slot": 0,
+          "departure_slot": 2,
+          "required_energy_wh": 1,
+          "planned_energy_wh": 1,
+          "charge_wh_by_slot": [
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "vehicle_id": "B",
+          "arrival_slot": 0,
+          "departure_slot": 4,
+          "required_energy_wh": 2,
+          "planned_energy_wh": 2,
+          "charge_wh_by_slot": [
+            1,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "slot": 0,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 1,
+          "normal_capacity_wh": 4,
+          "reduction_wh": 1,
+          "effective_capacity_wh": 3,
+          "station_used_wh": 2,
+          "spare_capacity_wh": 1
+        },
+        {
+          "slot": 2,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 1,
+          "effective_capacity_wh": 0,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 3,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 1,
+          "effective_capacity_wh": 0,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 0
+        }
+      ],
+      "total_planned_wh": 3
+    },
+    {
+      "scenario_id": "offer:S2",
+      "kind": "contingency",
+      "offer_id": "S2",
+      "activation_start_slot": 2,
+      "prefix_locked_through_slot": 2,
+      "vehicles": [
+        {
+          "vehicle_id": "A",
+          "arrival_slot": 0,
+          "departure_slot": 2,
+          "required_energy_wh": 1,
+          "planned_energy_wh": 1,
+          "charge_wh_by_slot": [
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "vehicle_id": "B",
+          "arrival_slot": 0,
+          "departure_slot": 4,
+          "required_energy_wh": 2,
+          "planned_energy_wh": 2,
+          "charge_wh_by_slot": [
+            1,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "slot": 0,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 1,
+          "normal_capacity_wh": 4,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 4,
+          "station_used_wh": 2,
+          "spare_capacity_wh": 2
+        },
+        {
+          "slot": 2,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 1,
+          "effective_capacity_wh": 0,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 3,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 1,
+          "effective_capacity_wh": 0,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 0
+        }
+      ],
+      "total_planned_wh": 3
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "station_id": "ST-RECOVER",
+  "window_start": "2026-12-01T01:30:00Z",
+  "slot_minutes": 15,
+  "normal_capacity_wh": [1, 1, 1],
+  "vehicles": [
+    {
+      "vehicle_id": "C",
+      "arrival_slot": 0,
+      "departure_slot": 3,
+      "max_charge_wh": [1, 1, 1],
+      "required_energy_wh": 2
+    }
+  ]
+}

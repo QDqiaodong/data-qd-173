@@ -1,0 +1,136 @@
+{
+  "plan_version": 1,
+  "station_id": "ST-RECOVER",
+  "window_start": "2026-12-01T01:30:00+00:00",
+  "slot_minutes": 15,
+  "slot_count": 3,
+  "normal_capacity_wh": [
+    1,
+    1,
+    1
+  ],
+  "decision": {
+    "accepted_offer_ids": [
+      "R1"
+    ],
+    "total_reward": 5,
+    "offer_count": 1,
+    "accepted_count": 1
+  },
+  "offers": [
+    {
+      "offer_id": "R1",
+      "start_slot": 1,
+      "end_slot": 2,
+      "reduction_wh": 1,
+      "reward": 5
+    }
+  ],
+  "offer_decisions": [
+    {
+      "offer_id": "R1",
+      "accepted": true,
+      "reward_if_accepted": 5,
+      "reject_reason": null,
+      "feasible_alone": true
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "baseline",
+      "kind": "baseline",
+      "offer_id": null,
+      "activation_start_slot": null,
+      "prefix_locked_through_slot": null,
+      "vehicles": [
+        {
+          "vehicle_id": "C",
+          "arrival_slot": 0,
+          "departure_slot": 3,
+          "required_energy_wh": 2,
+          "planned_energy_wh": 2,
+          "charge_wh_by_slot": [
+            1,
+            1,
+            0
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "slot": 0,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 1,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 2,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 1
+        }
+      ],
+      "total_planned_wh": 2
+    },
+    {
+      "scenario_id": "offer:R1",
+      "kind": "contingency",
+      "offer_id": "R1",
+      "activation_start_slot": 1,
+      "prefix_locked_through_slot": 1,
+      "vehicles": [
+        {
+          "vehicle_id": "C",
+          "arrival_slot": 0,
+          "departure_slot": 3,
+          "required_energy_wh": 2,
+          "planned_energy_wh": 2,
+          "charge_wh_by_slot": [
+            1,
+            0,
+            1
+          ]
+        }
+      ],
+      "slots": [
+        {
+          "slot": 0,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 1,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 1,
+          "effective_capacity_wh": 0,
+          "station_used_wh": 0,
+          "spare_capacity_wh": 0
+        },
+        {
+          "slot": 2,
+          "normal_capacity_wh": 1,
+          "reduction_wh": 0,
+          "effective_capacity_wh": 1,
+          "station_used_wh": 1,
+          "spare_capacity_wh": 0
+        }
+      ],
+      "total_planned_wh": 2
+    }
+  ]
+}

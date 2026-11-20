@@ -1,0 +1,22 @@
+{
+  "station_id": "ST-NOFEAS",
+  "window_start": "2026-12-03T00:00:00Z",
+  "slot_minutes": 30,
+  "normal_capacity_wh": [1],
+  "vehicles": [
+    {
+      "vehicle_id": "D",
+      "arrival_slot": 0,
+      "departure_slot": 1,
+      "max_charge_wh": [1],
+      "required_energy_wh": 1
+    },
+    {
+      "vehicle_id": "E",
+      "arrival_slot": 0,
+      "departure_slot": 1,
+      "max_charge_wh": [1],
+      "required_energy_wh": 1
+    }
+  ]
+}

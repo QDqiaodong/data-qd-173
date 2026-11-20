@@ -7,6 +7,7 @@ Two modes share one code base:
 * **Legacy static mode** – `tariffs` + `sessions` in, settlement out. Behavior and output are unchanged from the original implementation.
 * **Continuous correction-safe mode** – batches of cumulative meter readings, correction records and billing-period lifecycle actions are applied on top of a replayable state JSON. Station residuals, withheld energy, immutable closed statements and signed next-period adjustments are reported separately.
 * **Collection & admission workbench** (`charging.workbench`, CLI `charge-access`) – a separate, resumable JSON state machine that imports closed-line/adjustment credentials from the settlement engine (read-only), registers customer receipts, write-offs and chargebacks, and grants/starts/finishes station charging permits based on overdue debt. It never writes back to the settlement state. See [`docs/workbench.md`](docs/workbench.md).
+* **Fleet & load-shed planning** (`charging.planning`, CLI `charge-plan`) – a local, forward-only scheduler that turns fleet charging needs and mutually-exclusive grid load-shed offers into one auditable baseline schedule, per-offer accept decisions and a prefix-locked contingency plan per accepted offer. It issues no control commands and produces no billable energy, and never touches settlement/workbench state. See [`docs/planning.md`](docs/planning.md).
 
 ## Install and test
 
@@ -96,6 +97,34 @@ invalidation is irreversible and distinguishable from expiry; every
 `operation_id` is idempotently replayable with its original receipt. Full
 contract, JSON shapes and error codes: [`docs/workbench.md`](docs/workbench.md).
 
+## Fleet & load-shed planning
+
+Plan one station over one UTC window: a baseline charging schedule that meets
+every vehicle's exact energy need, plus accept/reject decisions for grid
+load-shed offers and a contingency schedule per accepted offer. Offers are
+mutually-exclusive activation scenarios (at most one fires, notice arrives at
+activation), so every contingency must match the baseline **vehicle-by-vehicle
+and slot-by-slot before its activation start**; the solver picks the highest
+total reward, breaking ties by the lexicographically smallest sorted offer-id
+sequence.
+
+```sh
+python -m charging.planning.cli \
+  --fleet fixtures/planning/fleet-headline.json \
+  --offers fixtures/planning/offers-headline.json \
+  --output run/plan.json
+
+# runnable walkthrough of the conflict, tie-break, post-event catch-up,
+# combination-beats-single and both failure modes
+bash examples/planning-demo.sh
+```
+
+Invalid input and an infeasible baseline exit `2` with distinct codes
+(`invalid_input`, `baseline_infeasible`, plus `search_limit_exceeded`) and
+leave any existing output file untouched. Full contract, JSON shapes,
+feasibility method (integer Dinic max-flow plus exact prefix-locked search)
+and scale notes: [`docs/planning.md`](docs/planning.md).
+
 ## Layout
 
 ```
@@ -104,10 +133,14 @@ charging/engine.py           continuous state machine: apply_batch(parent_state,
 charging/cli.py              charge-settle entry point for both settlement modes
 charging/workbench/engine.py collection & admission state machine: apply_round(parent_state, round_input)
 charging/workbench/cli.py    charge-access entry point (own resumable JSON state)
+charging/planning/engine.py  fleet/load-shed joint scheduler: plan(fleet_input, offers_input)
+charging/planning/cli.py     charge-plan entry point (pure planning, no control, no billing)
 fixtures/batches/            synthetic settlement batches
 fixtures/workbench/          synthetic workbench round inputs (no generated state is committed)
+fixtures/planning/           synthetic fleet/offers inputs and committed example plans
 examples/workbench-demo.sh   multi-round CLI demonstration of the admission lifecycle
-tests/                       legacy, continuous-mode and workbench tests, incl. CLI subprocess
+examples/planning-demo.sh    CLI demonstration of joint scheduling and both failure modes
+tests/                       legacy, continuous-mode, workbench and planning tests, incl. CLI subprocess
 ```
 
 Fixture data is synthetic. MIT licensed.

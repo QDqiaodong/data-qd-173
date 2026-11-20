@@ -1,0 +1,21 @@
+{
+  "station_id": "ST-HEADLINE",
+  "window_start": "2026-12-01T00:00:00Z",
+  "slot_minutes": 30,
+  "offers": [
+    {
+      "offer_id": "O1",
+      "start_slot": 1,
+      "end_slot": 2,
+      "reduction_wh": 4,
+      "reward": 7
+    },
+    {
+      "offer_id": "O2",
+      "start_slot": 1,
+      "end_slot": 4,
+      "reduction_wh": 1,
+      "reward": 9
+    }
+  ]
+}

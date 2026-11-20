@@ -1,0 +1,14 @@
+{
+  "station_id": "ST-RECOVER",
+  "window_start": "2026-12-01T01:30:00Z",
+  "slot_minutes": 15,
+  "offers": [
+    {
+      "offer_id": "R1",
+      "start_slot": 1,
+      "end_slot": 2,
+      "reduction_wh": 1,
+      "reward": 5
+    }
+  ]
+}
