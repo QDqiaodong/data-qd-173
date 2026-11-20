@@ -2,14 +2,80 @@
 
 Allocates metered energy intervals to charging sessions and computes tariff charges in integer cents. Python 3.11+; standard library only.
 
+Two modes share one code base:
+
+* **Legacy static mode** – `tariffs` + `sessions` in, settlement out. Behavior and output are unchanged from the original implementation.
+* **Continuous correction-safe mode** – batches of cumulative meter readings, correction records and billing-period lifecycle actions are applied on top of a replayable state JSON. Station residuals, withheld energy, immutable closed statements and signed next-period adjustments are reported separately.
+
+## Install and test
+
 ```sh
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python -r requirements-build.lock
 uv pip install --python .venv/bin/python --no-build-isolation --no-deps .
-.venv/bin/charge-settle --input fixtures/input.json --output run/settlement.json
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-Fixture data is synthetic. Contract details and limitations are in `docs/contract.md`. MIT licensed.
+Without `uv`, the suite also runs directly from the project root:
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+## Legacy static mode
+
+```sh
+.venv/bin/charge-settle --input fixtures/input.json --output run/settlement.json
+```
 
 Fixture summary: 2 sessions settle to 58 cents total.
+
+## Continuous mode
+
+```sh
+# round 1: register station/session/tariffs, first readings, open a period
+.venv/bin/charge-settle \
+  --batch fixtures/batches/batch-01-register.json \
+  --output-state run/state.json --output run/result-1.json
+
+# round 2: close January, open February
+.venv/bin/charge-settle \
+  --batch fixtures/batches/batch-02-close.json \
+  --state run/state.json --output-state run/state.json --output run/result-2.json
+
+# round 3: correct the station cumulative reading 1000 -> 1200 Wh
+.venv/bin/charge-settle \
+  --batch fixtures/batches/batch-03-correct.json \
+  --state run/state.json --output-state run/state.json --output run/result-3.json
+
+# round 4: reverse correction restores the balance; opposite adjustment is posted
+.venv/bin/charge-settle \
+  --batch fixtures/batches/batch-04-reverse.json \
+  --state run/state.json --output-state run/state.json --output run/result-4.json
+```
+
+After round 3 the result contains, simultaneously: a `200 Wh` station
+residual, the session listed under `withheld_energy` (no longer billable),
+the frozen January statement line still at `10` cents, and a `-10` cent
+adjustment in the open February period. Re-running any batch with the same
+`batch_id` returns `"replayed": true` and leaves the state byte-identical;
+an invalid batch exits `2` and leaves every output file untouched.
+
+The full semantic contract – state, batch, billing period, statement line,
+adjustment, `record_id`, `batch_id` and correction-chain definitions, replay
+rules, the `no_open_period` boundary and error codes – is in
+[`docs/continuous-settlement.md`](docs/continuous-settlement.md). Tariff
+splitting and rounding rules remain documented in
+[`docs/contract.md`](docs/contract.md).
+
+## Layout
+
+```
+charging/core.py     legacy settle() plus the shared per-session charging rule
+charging/engine.py   continuous state machine: apply_batch(parent_state, batch)
+charging/cli.py      charge-settle entry point for both modes
+fixtures/batches/    synthetic example batches (no generated state is committed)
+tests/               legacy and focused continuous-mode tests, incl. CLI subprocess
+```
+
+Fixture data is synthetic. MIT licensed.

@@ -1,0 +1,9 @@
+{
+  "batch_id": "2026-02-d02-correct-station",
+  "records": [
+    {"record_id": "rec-st-alpha-0010-c1", "source_id": "M-ST-ALPHA",
+     "meter_instant": "2026-01-10T01:00:00+00:00", "cumulative_wh": 1200,
+     "supersedes_record_id": "rec-st-alpha-0010"}
+  ],
+  "periods": []
+}
