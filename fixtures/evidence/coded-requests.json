@@ -1,0 +1,11 @@
+{
+  "station_id": "ST-DEMO-2",
+  "observed_until": "2026-11-20T11:04:00Z",
+  "requests": [
+    {"request_id": "REQ-K", "gun_id": "GUN-2",
+     "requested_at": "2026-11-20T11:00:00Z", "channel": "mobile",
+     "correlation_code": "K"},
+    {"request_id": "REQ-N", "gun_id": "GUN-2",
+     "requested_at": "2026-11-20T11:01:00Z", "channel": "terminal"}
+  ]
+}

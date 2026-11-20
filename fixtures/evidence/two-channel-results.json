@@ -1,0 +1,10 @@
+{
+  "station_id": "ST-DEMO-1",
+  "observed_until": "2026-11-20T10:04:00Z",
+  "results": [
+    {"result_id": "RES-F1", "gun_id": "GUN-1",
+     "resolved_at": "2026-11-20T10:00:40Z", "outcome": "failed"},
+    {"result_id": "RES-S1", "gun_id": "GUN-1",
+     "resolved_at": "2026-11-20T10:00:30Z", "outcome": "started"}
+  ]
+}

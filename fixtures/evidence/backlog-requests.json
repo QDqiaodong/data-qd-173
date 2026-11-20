@@ -1,0 +1,198 @@
+{
+  "station_id": "ST-DEMO-9",
+  "observed_until": "2026-11-20T12:04:00Z",
+  "requests": [
+    {
+      "request_id": "REQ-00",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:00Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-01",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:01Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-02",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:02Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-03",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:03Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-04",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:04Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-05",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:05Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-06",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:06Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-07",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:07Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-08",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:08Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-09",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:09Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-10",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:10Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-11",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:11Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-12",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:12Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-13",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:13Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-14",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:14Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-15",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:15Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-16",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:16Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-17",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:17Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-18",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:18Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-19",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:19Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-20",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:20Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-21",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:21Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-22",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:22Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-23",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:23Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-24",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:24Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-25",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:25Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-26",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:26Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-27",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:27Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-28",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:28Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-29",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:29Z",
+      "channel": "terminal"
+    },
+    {
+      "request_id": "REQ-30",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:30Z",
+      "channel": "mobile"
+    },
+    {
+      "request_id": "REQ-31",
+      "gun_id": "GUN-9",
+      "requested_at": "2026-11-20T12:00:31Z",
+      "channel": "terminal"
+    }
+  ]
+}

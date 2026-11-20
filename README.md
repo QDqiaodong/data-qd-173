@@ -8,6 +8,7 @@ Two modes share one code base:
 * **Continuous correction-safe mode** – batches of cumulative meter readings, correction records and billing-period lifecycle actions are applied on top of a replayable state JSON. Station residuals, withheld energy, immutable closed statements and signed next-period adjustments are reported separately.
 * **Collection & admission workbench** (`charging.workbench`, CLI `charge-access`) – a separate, resumable JSON state machine that imports closed-line/adjustment credentials from the settlement engine (read-only), registers customer receipts, write-offs and chargebacks, and grants/starts/finishes station charging permits based on overdue debt. It never writes back to the settlement state. See [`docs/workbench.md`](docs/workbench.md).
 * **Fleet & load-shed planning** (`charging.planning`, CLI `charge-plan`) – a local, forward-only scheduler that turns fleet charging needs and mutually-exclusive grid load-shed offers into one auditable baseline schedule, per-offer accept decisions and a prefix-locked contingency plan per accepted offer. It issues no control commands and produces no billable energy, and never touches settlement/workbench state. See [`docs/planning.md`](docs/planning.md).
+* **Charge-start evidence verification** (`charging.evidence`, CLI `charge-evidence`) – a local, read-only log verifier that matches start requests (mobile app / on-site terminal) against pile-side outcomes (actual start / start failure) for one station snapshot, and delivers a customer-service evidence list (confirmed pairs, unmatched records, records needing manual review) plus an operations report (per-group success-count ranges over all optimal interpretations, checked against a target in basis points). It never writes permits, pile faults or planned energy into settlement/workbench state. See [`docs/evidence.md`](docs/evidence.md).
 
 ## Install and test
 
@@ -125,6 +126,34 @@ leave any existing output file untouched. Full contract, JSON shapes,
 feasibility method (integer Dinic max-flow plus exact prefix-locked search)
 and scale notes: [`docs/planning.md`](docs/planning.md).
 
+## Charge-start evidence verification
+
+Verify one station's log snapshot (two logs: start **requests** from the mobile
+app / on-site terminal, and pile-side **results**) and deliver two products in
+one run: a customer-service evidence list and an operations success-rate
+report. A request and a result can only be linked on the same gun within
+0–120 s (inclusive) and with non-conflicting correlation codes; equal non-empty
+codes are strong evidence. Interpretations maximize strong-evidence pairs
+first, then total pairs; only pairs present in **every** optimal interpretation
+become confirmations.
+
+```sh
+python -m charging.evidence.cli \
+  --requests fixtures/evidence/two-channel-requests.json \
+  --results fixtures/evidence/two-channel-results.json \
+  --window-start 2026-11-20T10:00:00Z --window-end 2026-11-20T10:02:00Z \
+  --target-bp 5000 --output run/evidence.json
+
+# runnable walkthrough: two-channel ambiguity, strong-evidence priority,
+# 32x32 busy-gun backlog, and invalid input preserving the previous output
+bash examples/evidence-demo.sh
+```
+
+Invalid input exits `2` (`invalid_input`) and leaves any existing output file
+untouched. Full contract, JSON shapes, matching caliber, exact solution method
+(min-cost flow plus zero-reduced-cost residual SCCs, no enumeration of
+interpretations) and determinism notes: [`docs/evidence.md`](docs/evidence.md).
+
 ## Layout
 
 ```
@@ -135,12 +164,16 @@ charging/workbench/engine.py collection & admission state machine: apply_round(p
 charging/workbench/cli.py    charge-access entry point (own resumable JSON state)
 charging/planning/engine.py  fleet/load-shed joint scheduler: plan(fleet_input, offers_input)
 charging/planning/cli.py     charge-plan entry point (pure planning, no control, no billing)
+charging/evidence/engine.py  charge-start evidence verification: analyze(requests_doc, results_doc, ...)
+charging/evidence/cli.py     charge-evidence entry point (read-only log verification)
 fixtures/batches/            synthetic settlement batches
 fixtures/workbench/          synthetic workbench round inputs (no generated state is committed)
 fixtures/planning/           synthetic fleet/offers inputs and committed example plans
+fixtures/evidence/           synthetic request/result log snapshots (two-channel, coded, 32x32 backlog)
 examples/workbench-demo.sh   multi-round CLI demonstration of the admission lifecycle
 examples/planning-demo.sh    CLI demonstration of joint scheduling and both failure modes
-tests/                       legacy, continuous-mode, workbench and planning tests, incl. CLI subprocess
+examples/evidence-demo.sh    CLI demonstration of evidence lists, success ranges and failure semantics
+tests/                       legacy, continuous-mode, workbench, planning and evidence tests, incl. CLI subprocess
 ```
 
 Fixture data is synthetic. MIT licensed.

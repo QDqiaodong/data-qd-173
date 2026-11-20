@@ -1,0 +1,198 @@
+{
+  "station_id": "ST-DEMO-9",
+  "observed_until": "2026-11-20T12:04:00Z",
+  "results": [
+    {
+      "result_id": "RES-00",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:32Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-01",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:33Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-02",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:34Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-03",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:35Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-04",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:36Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-05",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:37Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-06",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:38Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-07",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:39Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-08",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:40Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-09",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:41Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-10",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:42Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-11",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:43Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-12",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:44Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-13",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:45Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-14",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:46Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-15",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:47Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-16",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:48Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-17",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:49Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-18",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:50Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-19",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:51Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-20",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:52Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-21",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:53Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-22",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:54Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-23",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:55Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-24",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:56Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-25",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:57Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-26",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:58Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-27",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:00:59Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-28",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:01:00Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-29",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:01:01Z",
+      "outcome": "failed"
+    },
+    {
+      "result_id": "RES-30",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:01:02Z",
+      "outcome": "started"
+    },
+    {
+      "result_id": "RES-31",
+      "gun_id": "GUN-9",
+      "resolved_at": "2026-11-20T12:01:03Z",
+      "outcome": "failed"
+    }
+  ]
+}

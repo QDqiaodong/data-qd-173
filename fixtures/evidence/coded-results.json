@@ -1,0 +1,11 @@
+{
+  "station_id": "ST-DEMO-2",
+  "observed_until": "2026-11-20T11:04:00Z",
+  "results": [
+    {"result_id": "RES-K", "gun_id": "GUN-2",
+     "resolved_at": "2026-11-20T11:01:10Z", "outcome": "started",
+     "correlation_code": "K"},
+    {"result_id": "RES-X", "gun_id": "GUN-2",
+     "resolved_at": "2026-11-20T11:00:20Z", "outcome": "started"}
+  ]
+}
