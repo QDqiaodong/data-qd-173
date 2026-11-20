@@ -1,0 +1,43 @@
+{
+  "round_id": "wb-r1-receive-deny",
+  "evaluation_at": "2026-02-10T00:00:00+00:00",
+  "import": {
+    "source_state": {
+      "closed_lines": {
+        "P1:S1": {
+          "line_id": "P1:S1",
+          "session_id": "S1",
+          "period_id": "P1",
+          "charge_cents": 100,
+          "reflected_charge_cents": 100
+        }
+      },
+      "adjustments": []
+    },
+    "session_accounts": {"S1": "A1"},
+    "period_due_at": {"P1": "2026-01-31T00:00:00+00:00"}
+  },
+  "register_policies": [
+    {"account_id": "A1", "debt_limit_cents": 30, "grace_seconds": 0}
+  ],
+  "finance_operations": [
+    {
+      "op": "receive",
+      "operation_id": "fin-rec-1",
+      "receipt_id": "R-001",
+      "account_id": "A1",
+      "amount_cents": 60,
+      "allocations": [{"line_id": "P1:S1", "amount_cents": 60}]
+    }
+  ],
+  "service_operations": [
+    {
+      "op": "grant",
+      "operation_id": "svc-grant-g",
+      "permit_id": "G",
+      "account_id": "A1",
+      "station_id": "ST-ALPHA",
+      "expires_at": "2026-03-01T00:00:00+00:00"
+    }
+  ]
+}

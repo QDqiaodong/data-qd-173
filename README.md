@@ -6,6 +6,7 @@ Two modes share one code base:
 
 * **Legacy static mode** – `tariffs` + `sessions` in, settlement out. Behavior and output are unchanged from the original implementation.
 * **Continuous correction-safe mode** – batches of cumulative meter readings, correction records and billing-period lifecycle actions are applied on top of a replayable state JSON. Station residuals, withheld energy, immutable closed statements and signed next-period adjustments are reported separately.
+* **Collection & admission workbench** (`charging.workbench`, CLI `charge-access`) – a separate, resumable JSON state machine that imports closed-line/adjustment credentials from the settlement engine (read-only), registers customer receipts, write-offs and chargebacks, and grants/starts/finishes station charging permits based on overdue debt. It never writes back to the settlement state. See [`docs/workbench.md`](docs/workbench.md).
 
 ## Install and test
 
@@ -68,14 +69,45 @@ rules, the `no_open_period` boundary and error codes – is in
 splitting and rounding rules remain documented in
 [`docs/contract.md`](docs/contract.md).
 
+## Collection & admission workbench
+
+The workbench answers which invoice a receipt settled, how much remains after
+a partial chargeback, and whether a customer may start charging at a station
+now. It keeps its own resumable state and only reads the settlement state:
+
+```sh
+# multi-round runnable example (writes only into a temporary directory)
+bash examples/workbench-demo.sh
+
+# or invoke rounds directly; --state may be omitted on the first round
+python -m charging.workbench.cli \
+  --round fixtures/workbench/round-01.json \
+  --state run/wb-state.json \
+  --output-state run/wb-state.json \
+  --output run/wb-result-01.json
+```
+
+Highlights: receivable = original `charge_cents` plus all signed adjustments
+referencing the line (internal `reflected_charge_cents` is ignored); receipts
+conserve `effective write-off + unallocated + cumulative chargebacks =
+received`; permits are non-monetary station-admission credentials with
+`issued → started → finished` / `invalidated` lifecycle; debt-driven
+invalidation is irreversible and distinguishable from expiry; every
+`operation_id` is idempotently replayable with its original receipt. Full
+contract, JSON shapes and error codes: [`docs/workbench.md`](docs/workbench.md).
+
 ## Layout
 
 ```
-charging/core.py     legacy settle() plus the shared per-session charging rule
-charging/engine.py   continuous state machine: apply_batch(parent_state, batch)
-charging/cli.py      charge-settle entry point for both modes
-fixtures/batches/    synthetic example batches (no generated state is committed)
-tests/               legacy and focused continuous-mode tests, incl. CLI subprocess
+charging/core.py             legacy settle() plus the shared per-session charging rule
+charging/engine.py           continuous state machine: apply_batch(parent_state, batch)
+charging/cli.py              charge-settle entry point for both settlement modes
+charging/workbench/engine.py collection & admission state machine: apply_round(parent_state, round_input)
+charging/workbench/cli.py    charge-access entry point (own resumable JSON state)
+fixtures/batches/            synthetic settlement batches
+fixtures/workbench/          synthetic workbench round inputs (no generated state is committed)
+examples/workbench-demo.sh   multi-round CLI demonstration of the admission lifecycle
+tests/                       legacy, continuous-mode and workbench tests, incl. CLI subprocess
 ```
 
 Fixture data is synthetic. MIT licensed.

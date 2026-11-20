@@ -5,3 +5,6 @@ run/
 build/
 dist/
 *.egg-info/
+# workbench generated states / results / receipts are never committed
+wb-state*.json
+wb-result*.json

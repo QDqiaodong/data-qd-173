@@ -10,6 +10,7 @@ dependencies = []
 
 [project.scripts]
 charge-settle = "charging.cli:main"
+charge-access = "charging.workbench.cli:main"
 
 [tool.setuptools]
-packages = ["charging"]
+packages = ["charging", "charging.workbench"]

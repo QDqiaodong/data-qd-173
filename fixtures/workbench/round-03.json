@@ -1,0 +1,29 @@
+{
+  "round_id": "wb-r3-chargeback-invalidate",
+  "evaluation_at": "2026-02-12T00:00:00+00:00",
+  "import": {
+    "source_state": {
+      "closed_lines": {
+        "P1:S1": {
+          "line_id": "P1:S1",
+          "session_id": "S1",
+          "period_id": "P1",
+          "charge_cents": 100,
+          "reflected_charge_cents": 100
+        }
+      },
+      "adjustments": []
+    },
+    "session_accounts": {"S1": "A1"},
+    "period_due_at": {"P1": "2026-01-31T00:00:00+00:00"}
+  },
+  "finance_operations": [
+    {
+      "op": "chargeback",
+      "operation_id": "fin-cb-2",
+      "receipt_id": "R-002",
+      "withdrawals": [{"line_id": "P1:S1", "amount_cents": 20}]
+    }
+  ],
+  "service_operations": []
+}

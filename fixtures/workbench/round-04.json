@@ -1,0 +1,30 @@
+{
+  "round_id": "wb-r4-begin-invalid-permit",
+  "evaluation_at": "2026-02-13T00:00:00+00:00",
+  "import": {
+    "source_state": {
+      "closed_lines": {
+        "P1:S1": {
+          "line_id": "P1:S1",
+          "session_id": "S1",
+          "period_id": "P1",
+          "charge_cents": 100,
+          "reflected_charge_cents": 100
+        }
+      },
+      "adjustments": []
+    },
+    "session_accounts": {"S1": "A1"},
+    "period_due_at": {"P1": "2026-01-31T00:00:00+00:00"}
+  },
+  "finance_operations": [],
+  "service_operations": [
+    {
+      "op": "begin",
+      "operation_id": "svc-begin-g",
+      "permit_id": "G",
+      "station_id": "ST-ALPHA",
+      "session_id": "SESSION-9001"
+    }
+  ]
+}
