@@ -1,0 +1,26 @@
+{
+  "batch_id": "demand-register",
+  "tariffs": [
+    {"start": "2026-03-01T00:00:00+00:00", "end": "2026-03-02T00:00:00+00:00", "cents_per_kwh": 10}
+  ],
+  "stations": [
+    {"station_id": "A", "import_source_id": "M-ST-A"},
+    {"station_id": "B", "import_source_id": "M-ST-B"}
+  ],
+  "records": [
+    {"record_id": "rec-a-0000", "source_id": "M-ST-A",
+     "meter_instant": "2026-03-01T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-a-0030", "source_id": "M-ST-A",
+     "meter_instant": "2026-03-01T00:30:00+00:00", "cumulative_wh": 1000},
+    {"record_id": "rec-a-0060", "source_id": "M-ST-A",
+     "meter_instant": "2026-03-01T01:00:00+00:00", "cumulative_wh": 2000},
+    {"record_id": "rec-b-0000", "source_id": "M-ST-B",
+     "meter_instant": "2026-03-01T00:00:00+00:00", "cumulative_wh": 0},
+    {"record_id": "rec-b-0015", "source_id": "M-ST-B",
+     "meter_instant": "2026-03-01T00:15:00+00:00", "cumulative_wh": 500},
+    {"record_id": "rec-b-0045", "source_id": "M-ST-B",
+     "meter_instant": "2026-03-01T00:45:00+00:00", "cumulative_wh": 1500},
+    {"record_id": "rec-b-0060", "source_id": "M-ST-B",
+     "meter_instant": "2026-03-01T01:00:00+00:00", "cumulative_wh": 2000}
+  ]
+}

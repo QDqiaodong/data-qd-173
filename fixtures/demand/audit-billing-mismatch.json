@@ -1,0 +1,25 @@
+{
+  "period_id": "P-2026-03-01-peak",
+  "period": {"start": "2026-03-01T00:00:00Z", "end": "2026-03-01T01:00:00Z"},
+  "stations": [
+    {"station_id": "A", "quarter_cap_wh": 1000},
+    {"station_id": "B", "quarter_cap_wh": 1000}
+  ],
+  "upstream": {
+    "source_id": "M-CAMPUS-FEED",
+    "readings": [
+      {"record_id": "up-0000", "meter_instant": "2026-03-01T00:00:00Z", "cumulative_wh": 0},
+      {"record_id": "up-0045", "meter_instant": "2026-03-01T00:45:00Z", "cumulative_wh": 3000},
+      {"record_id": "up-0060", "meter_instant": "2026-03-01T01:00:00Z", "cumulative_wh": 4000}
+    ]
+  },
+  "bill": {
+    "counted_quarters": ["2026-03-01T00:15:00Z", "2026-03-01T00:45:00Z"],
+    "minimum_demand_wh": 1500,
+    "rate_cents_per_kw": 100,
+    "declared_peak_quarter_start": "2026-03-01T00:45:00Z",
+    "declared_peak_wh": 1000,
+    "declared_billed_wh": 1600,
+    "declared_charge_cents": 640
+  }
+}

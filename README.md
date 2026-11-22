@@ -10,6 +10,7 @@ Two modes share one code base:
 * **Fleet & load-shed planning** (`charging.planning`, CLI `charge-plan`) – a local, forward-only scheduler that turns fleet charging needs and mutually-exclusive grid load-shed offers into one auditable baseline schedule, per-offer accept decisions and a prefix-locked contingency plan per accepted offer. It issues no control commands and produces no billable energy, and never touches settlement/workbench state. See [`docs/planning.md`](docs/planning.md).
 * **Charge-start evidence verification** (`charging.evidence`, CLI `charge-evidence`) – a local, read-only log verifier that matches start requests (mobile app / on-site terminal) against pile-side outcomes (actual start / start failure) for one station snapshot, and delivers a customer-service evidence list (confirmed pairs, unmatched records, records needing manual review) plus an operations report (per-group success-count ranges over all optimal interpretations, checked against a target in basis points). It never writes permits, pile faults or planned energy into settlement/workbench state. See [`docs/evidence.md`](docs/evidence.md).
 * **Protected charging-report release** (`charging.reporting`, CLI `charge-report`) – a local, read-only compiler for one closed period that turns billable `closed_lines` Wh into a station-by-fleet public report while preserving contract-protected cell margins. Exact integer lower-bound flow decides whether each protected cell still admits both a `v-d` and a `v+d` integer table under all public facts (no Wh enumeration, scales to 20 stations × 12 fleets, millions of Wh); candidate packages are chosen by exact value-maximizing branch-and-bound with lexicographic tie-break. It reads `apply_batch` state but never writes it back. See [`docs/reporting.md`](docs/reporting.md).
+* **Upstream demand-bill audit** (`charging.demand`, CLI `charge-demand`) – a local, read-only auditor that re-checks one campus upstream demand bill against the metering evidence: effective import-meter readings from the `apply_batch` snapshot plus separately supplied upstream readings are tested for a joint per-station per-quarter integer-Wh explanation (exact bounded integer circulation, no per-Wh expansion, scales to 31 days × 16 stations and millions of Wh). It reports the independently achievable peak/charge range with two full explanations, then adjudicates the bill (billing mismatch / evidence unsupported / undetermined / confirmed), or reports a standalone metering conflict. See [`docs/demand.md`](docs/demand.md).
 
 ## Install and test
 
@@ -155,6 +156,36 @@ untouched. Full contract, JSON shapes, matching caliber, exact solution method
 (min-cost flow plus zero-reduced-cost residual SCCs, no enumeration of
 interpretations) and determinism notes: [`docs/evidence.md`](docs/evidence.md).
 
+## Upstream demand-bill audit
+
+Re-check one campus upstream demand bill (peak quarter, billed Wh, demand
+charge) against the metering evidence before finance pays it:
+
+```sh
+python -m charging.demand.cli \
+  --state run/state.json \
+  --audit fixtures/demand/audit-headline.json \
+  --output run/demand-report.json
+
+# runnable walkthrough: headline undetermined case, confirmation after an extra
+# reading, unsupported peak, billing mismatch, metering conflict, peak tie,
+# superseding correction, and invalid input preserving the previous output
+bash examples/demand-demo.sh
+```
+
+Station import-meter readings come from the `apply_batch` snapshot (effective
+head records only); upstream readings come with the audit input. Adjacent
+reading differences only constrain the sum of the covered quarters, so a
+feasible explanation is a per-station per-quarter non-negative integer Wh
+allocation satisfying every station cap and every station/upstream interval
+delta simultaneously – solved as an exact bounded integer circulation with
+binary-searched extrema, never enumerating per-Wh values or quarter
+allocations. Invalid input exits `2` (`invalid_input`) and preserves any
+existing output; a format-valid but jointly infeasible metering record is
+reported as `metering_conflict` (exit `0`) with no evidence or billing
+conclusion. Full contract, JSON shapes, verdicts and scale notes:
+[`docs/demand.md`](docs/demand.md).
+
 ## Protected charging-report release
 
 Compile one **closed** period into a public station-by-fleet report that keeps
@@ -197,16 +228,21 @@ charging/evidence/cli.py     charge-evidence entry point (read-only log verifica
 charging/reporting/marginflow.py lower-bound integer flow: feasibility & protected-cell margins
 charging/reporting/engine.py  protected report compilation: compile_report(state, request)
 charging/reporting/cli.py     charge-report entry point (read-only, no state write-back)
+charging/demand/flow.py       bounded integer circulation: feasibility of joint explanations
+charging/demand/engine.py     upstream demand-bill audit: audit_bill(state, audit)
+charging/demand/cli.py        charge-demand entry point (read-only, no state write-back)
 fixtures/batches/            synthetic settlement batches
 fixtures/workbench/          synthetic workbench round inputs (no generated state is committed)
 fixtures/planning/           synthetic fleet/offers inputs and committed example plans
 fixtures/evidence/           synthetic request/result log snapshots (two-channel, coded, 32x32 backlog)
 fixtures/reporting/          closed-period batches and release-request fixtures (headline + edge cases)
+fixtures/demand/             settlement batches and audit inputs for the demand-bill audit (headline + edge cases)
 examples/workbench-demo.sh   multi-round CLI demonstration of the admission lifecycle
 examples/planning-demo.sh    CLI demonstration of joint scheduling and both failure modes
 examples/evidence-demo.sh    CLI demonstration of evidence lists, success ranges and failure semantics
 examples/reporting-demo.sh   CLI walkthrough from apply_batch closure to the two report outputs
-tests/                       legacy, continuous-mode, workbench, planning, evidence and reporting tests, incl. CLI subprocess
+examples/demand-demo.sh      CLI walkthrough from apply_batch state to the demand-audit report
+tests/                       legacy, continuous-mode, workbench, planning, evidence, reporting and demand tests, incl. CLI subprocess
 ```
 
 Fixture data is synthetic. MIT licensed.
